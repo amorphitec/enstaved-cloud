@@ -1,0 +1,65 @@
+version: '2'
+
+services:
+  web-proxy:
+    image: jwilder/nginx-proxy
+    container_name: web-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  enstaved-www:
+    build:
+      context: ./www
+      args:
+        - BLAH=bum
+    container_name: enstaved-www
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY
+      - VIRTUAL_HOST=www.enstaved.com
+      - DATA_DIR=/data
+  enstaved-gallery:
+    image: kdelfour/lychee-mysql-docker
+    container_name: enstaved-gallery
+    restart: unless-stopped
+    ports:
+      - "8001:80"
+    environment:
+      - VIRTUAL_HOST=www.enstaved.com
+    volumes:
+      - enstaved-gallery-uploads/:/uploads/
+      - enstaved-gallery-data/:/data/
+      - enstaved-gallery-plugins/:/plugins/
+    links:
+      - enstaved-gallery-db:mysql
+  enstaved-gallery-db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_USER=lychee
+      - MYSQL_PASSWORD=lychee
+      - MYSQL_DATABASE=lychee
+      - MYSQL_ROOT_PASSWORD=lychee
+    volumes:
+      - enstaved-gallery-db:/var/lib/mysql
+
+volumes:
+  enstaved-gallery-uploads:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-gallery/uploads
+  enstaved-gallery-data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-gallery/data
+  enstaved-gallery-plugins:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-gallery/plugins
+  enstaved-gallery-db:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-gallery/eb
