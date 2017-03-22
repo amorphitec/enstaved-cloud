@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   web-proxy:
@@ -12,16 +12,12 @@ services:
   enstaved-www:
     build:
       context: ./www
-      args:
-        - BLAH=bum
     container_name: enstaved-www
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "8000:80"
     environment:
-      - SECRET_KEY
       - VIRTUAL_HOST=www.enstaved.com
-      - DATA_DIR=/data
   enstaved-gallery:
     image: kdelfour/lychee-mysql-docker
     container_name: enstaved-gallery
@@ -29,7 +25,7 @@ services:
     ports:
       - "8001:80"
     environment:
-      - VIRTUAL_HOST=www.enstaved.com
+      - VIRTUAL_HOST=gallery.enstaved.com
     volumes:
       - enstaved-gallery-uploads/:/uploads/
       - enstaved-gallery-data/:/data/
@@ -62,4 +58,4 @@ volumes:
   enstaved-gallery-db:
     driver: local-persist
     driver_opts:
-      mountpoint: /var/data/enstaved-gallery/eb
+      mountpoint: /var/data/enstaved-gallery/db
