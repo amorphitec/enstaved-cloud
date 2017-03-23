@@ -35,10 +35,10 @@ services:
   enstaved-gallery-db:
     image: mysql:5.7
     environment:
-      - MYSQL_USER=lychee
-      - MYSQL_PASSWORD=lychee
-      - MYSQL_DATABASE=lychee
-      - MYSQL_ROOT_PASSWORD=lychee
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD
     volumes:
       - enstaved-gallery-db:/var/lib/mysql
 
