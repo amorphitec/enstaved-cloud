@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   web-proxy:
@@ -60,6 +60,19 @@ services:
       - MYSQL_ROOT_PASSWORD
     volumes:
       - enstaved-gallery-db:/var/lib/mysql
+  enstaved-survey:
+    image: crramirez/limesurvey:latest
+    container_name: enstaved-survey
+    restart: unless-stopped
+    ports:
+      - "8002:80"
+    environment:
+      - VIRTUAL_HOST=survey.enstaved.com
+      - LETSENCRYPT_HOST=survey.enstaved.com
+      - LETSENCRYPT_EMAIL=admin@enstaved.com
+    volumes:
+      - enstaved-survey-data/:/var/lib/mysql
+      - enstaved-survey-uploads/:/app/upload
 
 volumes:
   proxy-certs:
@@ -90,3 +103,11 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/enstaved-gallery/db
+  enstaved-survey-uploads:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-survey/uploads
+  enstaved-survey-data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-survey/data
