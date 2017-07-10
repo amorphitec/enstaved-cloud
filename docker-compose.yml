@@ -73,6 +73,19 @@ services:
     volumes:
       - enstaved-survey-data/:/var/lib/mysql
       - enstaved-survey-uploads/:/app/upload
+  enstaved-hieronymus:
+    build:
+      context: ./hieronymus
+    container_name: enstaved-hieronymus
+    restart: unless-stopped
+    ports:
+      - "8003:80"
+    environment:
+      - VIRTUAL_HOST=hieronymus.enstaved.com
+      - LETSENCRYPT_HOST=hieronymus.enstaved.com
+      - LETSENCRYPT_EMAIL=admin@enstaved.com
+    volumes:
+      - enstaved-hieronymus-models/:/data/models
 
 volumes:
   proxy-certs:
@@ -111,3 +124,7 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/enstaved-survey/data
+  enstaved-hieronymus-models:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-hieronymus/models
