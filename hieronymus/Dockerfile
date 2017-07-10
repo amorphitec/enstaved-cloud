@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y \
     openscad \
   && rm -rf /var/lib/apt/lists/*
 
-COPY app /app
+RUN mkdir /app
 COPY requirements.txt /app/
 WORKDIR /app
 RUN pip install --no-cache-dir -r requirements.txt
