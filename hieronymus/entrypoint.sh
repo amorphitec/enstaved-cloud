@@ -6,7 +6,7 @@ set -e
 :   ${LOG_DIR:="/log"}
 
 # Create and tail log files
-mkdir $LOG_DIR
+mkdir -p $LOG_DIR
 touch $LOG_DIR/gunicorn.log
 touch $LOG_DIR/access.log
 tail -F $LOG_DIR/{gunicorn.log,access.log} --max-unchanged-stats=5 &
