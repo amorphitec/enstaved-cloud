@@ -9,6 +9,7 @@ set -e
 mkdir -p $LOG_DIR
 touch $LOG_DIR/gunicorn.log
 touch $LOG_DIR/access.log
+touch $LOG_DIR/error.log
 tail -F $LOG_DIR/{gunicorn.log,access.log} --max-unchanged-stats=5 &
 
 # Start Gunicorn.
