@@ -2,7 +2,7 @@ FROM ubuntu:17.04
 
 RUN apt-get update && apt-get install -y \
 	python3 \
-	python3-pip
+	python3-pip \
     Xvfb \
     openscad \
   && rm -rf /var/lib/apt/lists/*
