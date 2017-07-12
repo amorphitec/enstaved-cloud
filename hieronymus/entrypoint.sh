@@ -13,7 +13,7 @@ touch $LOG_DIR/error.log
 tail -F $LOG_DIR/{gunicorn.log,access.log,error.log} --max-unchanged-stats=5 &
 
 # Start Gunicorn.
-exec gunicorn hieronymus.hieronymus:main \
+exec gunicorn hieronymus.hieronymus:app \
     --name hieronymus \
     --bind 0.0.0.0:80 \
     --workers 3 \
