@@ -12,6 +12,10 @@ touch $LOG_DIR/access.log
 touch $LOG_DIR/error.log
 tail -F $LOG_DIR/{gunicorn.log,access.log,error.log} --max-unchanged-stats=5 &
 
+# Xvfb for headless rendering
+Xvfb :5 -screen 0 1024x768x24 &
+export DISPLAY=:5
+
 # Start Gunicorn.
 exec gunicorn hieronymus.hieronymus:app \
     --name hieronymus \
