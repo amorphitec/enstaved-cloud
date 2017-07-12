@@ -19,4 +19,5 @@ exec gunicorn hieronymus.hieronymus:app \
     --log-level=info \
     --log-file=${LOG_DIR}/gunicorn.log \
     --access-logfile=${LOG_DIR}/access.log \
+    --error-logfile=${LOG_DIR}/error.log \
     "$@"
