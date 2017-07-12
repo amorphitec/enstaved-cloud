@@ -1,6 +1,8 @@
-FROM python:3.5
+FROM ubuntu:17.04
 
 RUN apt-get update && apt-get install -y \
+	python3 \
+	python3-pip
     Xvfb \
     openscad \
   && rm -rf /var/lib/apt/lists/*
@@ -8,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir /app
 COPY requirements.txt /app/
 WORKDIR /app
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Data directories
 RUN mkdir -p /data/models
