@@ -33,7 +33,7 @@ services:
       - "8000:80"
     environment:
       - VIRTUAL_HOST=enstaved.com,www.enstaved.com,mail.enstaved.com
-      - LETSENCRYPT_HOST=enstaved.com,www.enstaved.com
+      - LETSENCRYPT_HOST=enstaved.com,www.enstaved.com,mail.enstaved.com
       - LETSENCRYPT_EMAIL=admin@enstaved.com
   enstaved-gallery:
     image: kdelfour/lychee-mysql-docker
@@ -104,6 +104,7 @@ services:
     - enstaved-mail-state:/var/mail-state
     - enstaved-mail-config:/tmp/docker-mailserver
     - proxy-certs:/etc/letsencrypt/live:ro
+    - ./mail/config/dovecot/10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf
     environment:
     - ENABLE_SPAMASSASSIN=1
     - ENABLE_CLAMAV=0
@@ -113,8 +114,6 @@ services:
     - SSL_TYPE=letsencrypt
     - ONE_DIR=1
     - DMS_DEBUG=0
-    - LETSENCRYPT_HOST=mail.enstaved.com
-    - LETSENCRYPT_EMAIL=admin@enstaved.com
     cap_add:
     - NET_ADMIN
 
