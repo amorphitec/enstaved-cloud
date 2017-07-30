@@ -32,8 +32,8 @@ services:
     ports:
       - "8000:80"
     environment:
-      - VIRTUAL_HOST=www.enstaved.com,mail.enstaved.com
-      - LETSENCRYPT_HOST=www.enstaved.com,mail.enstaved.com
+      - VIRTUAL_HOST=enstaved.com,www.enstaved.com,mail.enstaved.com
+      - LETSENCRYPT_HOST=enstaved.com,www.enstaved.com,mail.enstaved.com
       - LETSENCRYPT_EMAIL=admin@enstaved.com
   enstaved-gallery:
     image: kdelfour/lychee-mysql-docker
