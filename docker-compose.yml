@@ -32,6 +32,12 @@ services:
     ports:
       - "8000:80"
     environment:
+      # We need a cert for mail.enstaved.com to use in the enstaved-mail
+      # service. The web-proxy-letsencrypt service automatically creates
+      # wildcard certs for multiple sub-domains of the same domain, using
+      # the first domain in the list as the "primary". The automagic
+      # letsencrypt detection in enstaved-mail looks for a directory with
+      # the email subdomain. Hence mail.enstaved.com must be first here.
       - VIRTUAL_HOST=mail.enstaved.com,www.enstaved.com
       - LETSENCRYPT_HOST=mail.enstaved.com,www.enstaved.com
       - LETSENCRYPT_EMAIL=admin@enstaved.com
