@@ -121,6 +121,38 @@ services:
     - DMS_DEBUG=0
     cap_add:
     - NET_ADMIN
+  enstaved-shop:
+    build:
+      context: ./shop
+    container_name: enstaved-shop
+    restart: unless-stopped
+    ports:
+      - "8004:80"
+    environment:
+      - VIRTUAL_HOST=shop.enstaved.com
+      - LETSENCRYPT_HOST=shop.enstaved.com
+      - LETSENCRYPT_EMAIL=admin@enstaved.com
+      - PORT=8004
+      - DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}"
+      - DEBUG=True
+      - DEFAULT_FROM_EMAIL="admin@enstaved.com"
+      - SECRET_KEY
+      - EMAIL_URL
+    volumes:
+      - enstaved-shop-media:/media
+    links:
+      - enstaved-postgres:postgres
+  enstaved-postgres:
+    image: postgres:9.6
+    container_name: enstaved-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - enstaved-postgres-db:/var/lib/postgresql/data/pgdata
 
 volumes:
   proxy-certs:
@@ -175,3 +207,11 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/mail/config
+  enstaved-shop-media:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-shop/media
+  enstaved-postgres-db:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-postgres/db
