@@ -134,8 +134,8 @@ services:
       - LETSENCRYPT_HOST=shop.enstaved.com
       - LETSENCRYPT_EMAIL=admin@enstaved.com
       - PORT=8004
-      - DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}"
-      - REDIS_URL="redis://:${REDIS_PASSWORD}@redis:6379/0"
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
       - DEBUG=True
       - DEFAULT_FROM_EMAIL="admin@enstaved.com"
       - SECRET_KEY
