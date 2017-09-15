@@ -135,6 +135,7 @@ services:
       - LETSENCRYPT_EMAIL=admin@enstaved.com
       - PORT=8004
       - DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}"
+      - REDIS_URL="redis://:${REDIS_PASSWORD}@redis:6379/0"
       - DEBUG=True
       - DEFAULT_FROM_EMAIL="admin@enstaved.com"
       - SECRET_KEY
@@ -154,6 +155,16 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - enstaved-postgres-db:/var/lib/postgresql/data/pgdata
+  enstaved-redis:
+    image: 'bitnami/redis:latest'
+    container_name: enstaved-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    environment:
+      - REDIS_PASSWORD
+    volumes:
+      - enstaved-redis-db:/bitnami
 
 volumes:
   proxy-certs:
@@ -216,3 +227,7 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/enstaved-postgres/db
+  enstaved-redis-db:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-redis/db
