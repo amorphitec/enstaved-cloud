@@ -59,6 +59,7 @@ services:
       - enstaved-gallery-db:mysql
   enstaved-gallery-db:
     image: mysql:5.7
+    container-name: enstaved-gallery-db
     environment:
       - MYSQL_USER
       - MYSQL_PASSWORD
