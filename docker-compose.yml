@@ -145,6 +145,7 @@ services:
       - enstaved-shop-media:/media
     links:
       - enstaved-postgres:postgres
+      - enstaved-redis:redis
   enstaved-devshop:
     build:
       context: ./devshop
@@ -168,6 +169,7 @@ services:
       - enstaved-devshop-media:/media
     links:
       - enstaved-postgres:postgres
+      - enstaved-redis:redis
   enstaved-postgres:
     build:
       context: ./postgres
