@@ -135,24 +135,54 @@ services:
       - LETSENCRYPT_EMAIL=admin@enstaved.com
       - PORT=80
       - ALLOWED_HOSTS=shop.enstaved.com
-      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
-      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
-      - DEBUG=True
+      - DATABASE_URL=postgres://${SHOP_DB_USER}:${SHOP_DB_PASSWORD}@postgres/${SHOP_DB}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/${SHOP_REDIS}
+      - EMAIL_URL=smtp://${SHOP_EMAIL_USER}:${SHOP_EMAIL_PASSWORD}@${SHOP_EMAIL_HOST}:${SHOP_EMAIL_PORT}/?ssl=True
+      - SECRET_KEY=${SHOP_SECRET_KEY}
+      - DEBUG=False
       - DEFAULT_FROM_EMAIL="admin@enstaved.com"
-      - SECRET_KEY
-      - EMAIL_URL
     volumes:
       - enstaved-shop-media:/media
     links:
       - enstaved-postgres:postgres
+  enstaved-devshop:
+    build:
+      context: ./devshop
+    container_name: enstaved-devshop
+    restart: unless-stopped
+    ports:
+      - "8005:80"
+    environment:
+      - VIRTUAL_HOST=devshop.enstaved.com
+      - LETSENCRYPT_HOST=devshop.enstaved.com
+      - LETSENCRYPT_EMAIL=admin@enstaved.com
+      - PORT=80
+      - ALLOWED_HOSTS=devshop.enstaved.com
+      - DATABASE_URL=postgres://${DEVSHOP_DB_USER}:${DEVSHOP_DB_PASSWORD}@postgres/${DEVSHOP_DB}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/${DEVSHOP_REDIS}
+      - EMAIL_URL=smtp://${DEVSHOP_EMAIL_USER}:${DEVSHOP_EMAIL_PASSWORD}@${DEVSHOP_EMAIL_HOST}:${DEVSHOP_EMAIL_PORT}/?ssl=True
+      - SECRET_KEY=${DEVSHOP_SECRET_KEY}
+      - DEBUG=False
+      - DEFAULT_FROM_EMAIL="admin@enstaved.com"
+    volumes:
+      - enstaved-devshop-media:/media
+    links:
+      - enstaved-postgres:postgres
   enstaved-postgres:
-    image: postgres:9.6
+    build:
+      context: ./postgres
     container_name: enstaved-postgres
     restart: unless-stopped
     environment:
       - POSTGRES_DB
       - POSTGRES_USER
       - POSTGRES_PASSWORD
+      - SHOP_DB
+      - SHOP_DB_USER
+      - SHOP_DB_PASSWORD
+      - DEVSHOP_DB
+      - DEVSHOP_DB_USER
+      - DEVSHOP_DB_PASSWORD
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - enstaved-postgres-db:/var/lib/postgresql/data/pgdata
@@ -221,6 +251,10 @@ volumes:
     driver_opts:
       mountpoint: /var/data/mail/config
   enstaved-shop-media:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-shop/media
+  enstaved-devshop-media:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/enstaved-shop/media

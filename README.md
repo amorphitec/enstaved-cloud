@@ -5,21 +5,20 @@ Enstaved cloud hosting
 
 * [Account creation](https://github.com/tomav/docker-mailserver/wiki/Configure-Accounts)
 
-## Shop
+## Shop / Devshop
 
 Post-deployment:
 
 ```
-docker-compose run enstaved-shop python manage.py migrate
-docker-compose run enstaved-shop python manage.py collectstatic
-docker-compose run esntaved-shop python manage.py populatedb --createsuperuser
+python manage.py migrate
+python manage.py collectstatic
+python manage.py --createsuperuser
 ```
 
 *The `--createsuperuser` switch creates an admin account for `admin@example.com` with the password set to `admin`.*
 
-
 ## ToDo
 
+* Proper CI for shop/devshop
 * Replace `links` with docker networks
-* Separate `devshop` + db
 * Singular mysql

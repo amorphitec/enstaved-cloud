@@ -7,7 +7,7 @@ RUN \
   apt-get clean
 
 ENV APP_ROOT /app
-# TODO: change this to a specific release or #latest?
+# TODO: change this to a dev branch?
 ENV GIT_REPO https://github.com/amorphitec/enstaved-shop.git
 ENV GIT_BRANCH enstaved-master
 
