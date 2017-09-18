@@ -162,7 +162,7 @@ services:
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/${DEVSHOP_REDIS}
       - EMAIL_URL=smtp://${DEVSHOP_EMAIL_USER}:${DEVSHOP_EMAIL_PASSWORD}@${DEVSHOP_EMAIL_HOST}:${DEVSHOP_EMAIL_PORT}/?ssl=True
       - SECRET_KEY=${DEVSHOP_SECRET_KEY}
-      - DEBUG=False
+      - DEBUG=True
       - DEFAULT_FROM_EMAIL="admin@enstaved.com"
     volumes:
       - enstaved-devshop-media:/media
