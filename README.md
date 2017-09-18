@@ -12,10 +12,8 @@ Post-deployment:
 ```
 python manage.py migrate
 python manage.py collectstatic
-python manage.py --createsuperuser
+python manage.py createsuperuser --email <user>@enstaved.com
 ```
-
-*The `--createsuperuser` switch creates an admin account for `admin@example.com` with the password set to `admin`.*
 
 ## ToDo
 
