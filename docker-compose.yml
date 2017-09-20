@@ -145,7 +145,7 @@ services:
       - STRIPE_SECRET_KEY=${SHOP_STRIPE_SECRET_KEY}
       - STRIPE_PUBLIC_KEY=${SHOP_STRIPE_PUBLIC_KEY}
     volumes:
-      - enstaved-shop-media:/media
+      - enstaved-shop-media:/app/media
     links:
       - enstaved-postgres:postgres
       - enstaved-redis:redis
@@ -172,7 +172,7 @@ services:
       - STRIPE_SECRET_KEY=${DEVSHOP_STRIPE_SECRET_KEY}
       - STRIPE_PUBLIC_KEY=${DEVSHOP_STRIPE_PUBLIC_KEY}
     volumes:
-      - enstaved-devshop-media:/media
+      - enstaved-devshop-media:/app/media
     links:
       - enstaved-postgres:postgres
       - enstaved-redis:redis
