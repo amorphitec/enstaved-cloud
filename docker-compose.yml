@@ -137,10 +137,13 @@ services:
       - ALLOWED_HOSTS=shop.enstaved.com
       - DATABASE_URL=postgres://${SHOP_DB_USER}:${SHOP_DB_PASSWORD}@postgres/${SHOP_DB}
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/${SHOP_REDIS}
-      - EMAIL_URL=smtp://${SHOP_EMAIL_USER}:${SHOP_EMAIL_PASSWORD}@${SHOP_EMAIL_HOST}:${SHOP_EMAIL_PORT}/?ssl=True
+      - EMAIL_URL=smtps://${SHOP_EMAIL_USER}:${SHOP_EMAIL_PASSWORD}@${SHOP_EMAIL_HOST}:${SHOP_EMAIL_PORT}
       - SECRET_KEY=${SHOP_SECRET_KEY}
       - DEBUG=False
       - DEFAULT_FROM_EMAIL="admin@enstaved.com"
+      - GOOGLE_ANALYTICS_TRACKING_ID=${SHOP_GOOGLE_ANALYTICS}
+      - STRIPE_SECRET_KEY=${SHOP_STRIPE_SECRET_KEY}
+      - STRIPE_PUBLIC_KEY=${SHOP_STRIPE_PUBLIC_KEY}
     volumes:
       - enstaved-shop-media:/media
     links:
@@ -161,10 +164,13 @@ services:
       - ALLOWED_HOSTS=devshop.enstaved.com
       - DATABASE_URL=postgres://${DEVSHOP_DB_USER}:${DEVSHOP_DB_PASSWORD}@postgres/${DEVSHOP_DB}
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/${DEVSHOP_REDIS}
-      - EMAIL_URL=smtp://${DEVSHOP_EMAIL_USER}:${DEVSHOP_EMAIL_PASSWORD}@${DEVSHOP_EMAIL_HOST}:${DEVSHOP_EMAIL_PORT}/?ssl=True
+      - EMAIL_URL=smtps://${DEVSHOP_EMAIL_USER}:${DEVSHOP_EMAIL_PASSWORD}@${DEVSHOP_EMAIL_HOST}:${DEVSHOP_EMAIL_PORT}
       - SECRET_KEY=${DEVSHOP_SECRET_KEY}
       - DEBUG=True
       - DEFAULT_FROM_EMAIL="admin@enstaved.com"
+      - GOOGLE_ANALYTICS_TRACKING_ID=${DEVSHOP_GOOGLE_ANALYTICS}
+      - STRIPE_SECRET_KEY=${DEVSHOP_STRIPE_SECRET_KEY}
+      - STRIPE_PUBLIC_KEY=${DEVSHOP_STRIPE_PUBLIC_KEY}
     volumes:
       - enstaved-devshop-media:/media
     links:
