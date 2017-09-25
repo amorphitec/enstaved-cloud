@@ -13,6 +13,7 @@ touch $LOG_DIR/error.log
 tail -F $LOG_DIR/{gunicorn.log,access.log,error.log} --max-unchanged-stats=5 &
 
 # Xvfb for headless rendering
+rm -f -- /tmp/.X5-lock
 Xvfb :5 -screen 0 1024x768x24 &
 export DISPLAY=:5
 
