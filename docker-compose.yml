@@ -144,6 +144,7 @@ services:
       - GOOGLE_ANALYTICS_TRACKING_ID=${SHOP_GOOGLE_ANALYTICS}
       - STRIPE_SECRET_KEY=${SHOP_STRIPE_SECRET_KEY}
       - STRIPE_PUBLIC_KEY=${SHOP_STRIPE_PUBLIC_KEY}
+      - STRIPE_NAME=${SHOP_STRIPE_NAME}
     volumes:
       - enstaved-shop-media:/app/media
     links:
@@ -171,6 +172,7 @@ services:
       - GOOGLE_ANALYTICS_TRACKING_ID=${DEVSHOP_GOOGLE_ANALYTICS}
       - STRIPE_SECRET_KEY=${DEVSHOP_STRIPE_SECRET_KEY}
       - STRIPE_PUBLIC_KEY=${DEVSHOP_STRIPE_PUBLIC_KEY}
+      - STRIPE_NAME=${DEVSHOP_STRIPE_NAME}
     volumes:
       - enstaved-devshop-media:/app/media
     links:
