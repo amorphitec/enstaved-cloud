@@ -267,7 +267,7 @@ volumes:
   enstaved-devshop-media:
     driver: local-persist
     driver_opts:
-      mountpoint: /var/data/enstaved-shop/media
+      mountpoint: /var/data/enstaved-devshop/media
   enstaved-postgres-db:
     driver: local-persist
     driver_opts:
