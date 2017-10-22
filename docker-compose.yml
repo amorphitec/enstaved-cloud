@@ -218,7 +218,7 @@ services:
   enstaved-wiki:
     image: 'requarks/wiki:latest'
     links:
-      - enstaved-wikidb:wikidb
+      - enstaved-mongo:mongo
     ports:
       - '8006:3000'
     environment:
