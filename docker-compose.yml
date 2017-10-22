@@ -206,6 +206,28 @@ services:
       - REDIS_PASSWORD
     volumes:
       - enstaved-redis-db:/bitnami
+  enstaved-mongo:
+    image: mongo
+    container_name: enstaved-redis
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    command: '--smallfiles --logpath=/dev/null'
+    volumes:
+      - enstaved-mongo-db:/data/db
+  enstaved-wiki:
+    image: 'requarks/wiki:latest'
+    links:
+      - enstaved-wikidb:wikidb
+    ports:
+      - '8006:3000'
+    environment:
+      - VIRTUAL_HOST=wiki.enstaved.com
+      - LETSENCRYPT_HOST=wiki.enstaved.com
+      - LETSENCRYPT_EMAIL=admin@enstaved.com
+      - WIKI_ADMIN_EMAIL=admin@enstaved.com
+    volumes:
+      - enstaved-wiki-config:/var/wiki
 
 volumes:
   proxy-certs:
@@ -276,3 +298,11 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/enstaved-redis/db
+  enstaved-mongo-db:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-mongo/db
+  enstaved-wiki-config:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-wiki/config
