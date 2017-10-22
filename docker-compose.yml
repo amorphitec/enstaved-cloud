@@ -208,7 +208,7 @@ services:
       - enstaved-redis-db:/bitnami
   enstaved-mongo:
     image: mongo
-    container_name: enstaved-redis
+    container_name: enstaved-mongo
     restart: unless-stopped
     ports:
       - '27017:27017'
