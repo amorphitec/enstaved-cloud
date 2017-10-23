@@ -227,7 +227,7 @@ services:
       - LETSENCRYPT_EMAIL=admin@enstaved.com
       - WIKI_ADMIN_EMAIL=admin@enstaved.com
     volumes:
-      - enstaved-wiki-config:/var/wiki
+      - enstaved-wiki-config/config.yaml:/var/wiki/config.yaml
 
 volumes:
   proxy-certs:
