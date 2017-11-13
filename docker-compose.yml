@@ -309,7 +309,7 @@ volumes:
   enstaved-mysql-db:
     driver: local-persist
     driver_opts:
-      mountpoint: /var/data/enstaved-gallery/db
+      mountpoint: /var/data/enstaved-mysql/db
   enstaved-postgres-db:
     driver: local-persist
     driver_opts:
