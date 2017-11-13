@@ -183,20 +183,20 @@ services:
 #      - WIKI_ADMIN_EMAIL=admin@enstaved.com
 #    volumes:
 #      - enstaved-wiki-config/config.yaml:/var/wiki/config.yaml
-#  enstaved-blog:
-#    image: 'ghost:1-alpine'
-#    restart: unless-stopped
-#    ports:
-#      - '8007:2368'
-#    environment:
-#      # see https://docs.ghost.org/docs/config#section-running-ghost-with-config-env-variables
-#      - database__client=mysql
-#      - database__connection__host=mysql
-#      - database__connection__user=${BLOG_DB_USER}
-#      - database__connection__password=${BLOG_DB_PASS}
-#      - database__connection__database=${BLOG_DB}
-#    links:
-#      - enstaved-mysql:mysql
+  enstaved-blog:
+    image: 'ghost:1-alpine'
+    restart: unless-stopped
+    ports:
+      - '8007:2368'
+    environment:
+      # see https://docs.ghost.org/docs/config#section-running-ghost-with-config-env-variables
+      - database__client=mysql
+      - database__connection__host=mysql
+      - database__connection__user=${BLOG_DB_USER}
+      - database__connection__password=${BLOG_DB_PASS}
+      - database__connection__database=${BLOG_DB}
+    links:
+      - enstaved-mysql:mysql
   enstaved-mysql:
     image: mysql:5.7
     container_name: enstaved-mysql
