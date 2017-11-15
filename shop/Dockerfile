@@ -7,13 +7,14 @@ RUN \
   apt-get clean
 
 ENV APP_ROOT /app
-# TODO: change this to a specific release or #latest?
 ENV GIT_REPO https://github.com/amorphitec/enstaved-shop.git
 ENV GIT_BRANCH enstaved-master
+ENV SHOP_RELEASE 0.3.2
 
 RUN mkdir $APP_ROOT
 WORKDIR $APP_ROOT
 RUN git clone -b $GIT_BRANCH $GIT_REPO $APP_ROOT
+RUN git checkout 0.3.2
 
 RUN pip install -r /app/requirements.txt
 
