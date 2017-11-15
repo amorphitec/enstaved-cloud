@@ -207,6 +207,8 @@ services:
       - mail__options__tls__rejectUnauthorized=false,
     links:
       - enstaved-mysql:mysql
+    volumes:
+      - enstaved-blog-content:/var/lib/ghost/content
   enstaved-mysql:
     image: mysql:5.7
     container_name: enstaved-mysql
@@ -316,6 +318,10 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/enstaved-wiki/config
+  enstaved-blog-content:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-blog/content
   enstaved-mysql-db:
     driver: local-persist
     driver_opts:
