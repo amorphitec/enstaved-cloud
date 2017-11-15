@@ -198,6 +198,12 @@ services:
       - database__connection__user=${BLOG_DB_USER}
       - database__connection__password=${BLOG_DB_PASS}
       - database__connection__database=${BLOG_DB}
+      - mail__transport=SMTP
+      - mail__options__host=${BLOG_MAIL_SERVER}
+      - mail__options__port=${BLOG_MAIL_PORT}
+      - mail__options__auth__user=${BLOG_MAIL_USER}
+      - mail__options__auth__pass=${BLOG_MAIL_PASSWORD}
+      - mail__options__tls__rejectUnauthorized=false,
     links:
       - enstaved-mysql:mysql
   enstaved-mysql:
