@@ -9,12 +9,12 @@ RUN \
 ENV APP_ROOT /app
 ENV GIT_REPO https://github.com/amorphitec/enstaved-shop.git
 ENV GIT_BRANCH enstaved-master
-ENV SHOP_RELEASE 0.3.2
+ENV SHOP_RELEASE v0.3.2
 
 RUN mkdir $APP_ROOT
 WORKDIR $APP_ROOT
 RUN git clone -b $GIT_BRANCH $GIT_REPO $APP_ROOT
-RUN git checkout 0.3.2
+RUN git checkout $SHOP_RELEASE
 
 RUN pip install -r /app/requirements.txt
 
