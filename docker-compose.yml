@@ -294,15 +294,15 @@ volumes:
   enstaved-mail-data:
     driver: local-persist
     driver_opts:
-      mountpoint: /var/data/enstaved-mail/data
+      mountpoint: /var/data/mail/data
   enstaved-mail-state:
     driver: local-persist
     driver_opts:
-      mountpoint: /var/data/enstaved-mail/state
+      mountpoint: /var/data/mail/state
   enstaved-mail-config:
     driver: local-persist
     driver_opts:
-      mountpoint: /var/data/enstaved-mail/config
+      mountpoint: /var/data/mail/config
   enstaved-shop-media:
     driver: local-persist
     driver_opts:
