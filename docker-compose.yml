@@ -26,6 +26,7 @@ services:
       - proxy-html:/usr/share/nginx/html
   enstaved-blog:
     image: 'ghost:1-alpine'
+    container_name: enstaved-blog
     restart: unless-stopped
     ports:
       - '8000:2368'
