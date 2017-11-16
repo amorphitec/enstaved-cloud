@@ -24,13 +24,11 @@ services:
       - proxy-certs:/etc/nginx/certs:rw
       - proxy-vhosts:/etc/nginx/vhost.d
       - proxy-html:/usr/share/nginx/html
-  enstaved-www:
-    build:
-      context: ./www
-    container_name: enstaved-www
+  enstaved-blog:
+    image: 'ghost:1-alpine'
     restart: unless-stopped
     ports:
-      - "8000:80"
+      - '8000:2368'
     environment:
       # We need a cert for mail.enstaved.com to use in the enstaved-mail
       # service. The web-proxy-letsencrypt service automatically creates
@@ -38,9 +36,27 @@ services:
       # the first domain in the list as the "primary". The automagic
       # letsencrypt detection in enstaved-mail looks for a directory with
       # the email subdomain. Hence mail.enstaved.com must be first here.
-      - VIRTUAL_HOST=mail.enstaved.com,www.enstaved.com
-      - LETSENCRYPT_HOST=mail.enstaved.com,www.enstaved.com
+      - VIRTUAL_HOST=mail.enstaved.com,blog.enstaved.com,www.enstaved.com
+      - LETSENCRYPT_HOST=mail.enstaved.com,blog.enstaved.com,www.enstaved.com
       - LETSENCRYPT_EMAIL=admin@enstaved.com
+      - LETSENCRYPT_EMAIL=admin@enstaved.com
+      # see https://docs.ghost.org/docs/config#section-running-ghost-with-config-env-variables
+      - url=https://blog.enstaved.com
+      - database__client=mysql
+      - database__connection__host=mysql
+      - database__connection__user=${BLOG_DB_USER}
+      - database__connection__password=${BLOG_DB_PASS}
+      - database__connection__database=${BLOG_DB}
+      - mail__transport=SMTP
+      - mail__options__host=${BLOG_MAIL_SERVER}
+      - mail__options__port=${BLOG_MAIL_PORT}
+      - mail__options__auth__user=${BLOG_MAIL_USER}
+      - mail__options__auth__pass=${BLOG_MAIL_PASSWORD}
+      - mail__options__tls__rejectUnauthorized=false,
+    links:
+      - enstaved-mysql:mysql
+    volumes:
+      - enstaved-blog-content:/var/lib/ghost/content
   enstaved-gallery:
     image: kdelfour/lychee-mysql-docker
     container_name: enstaved-gallery
@@ -183,32 +199,6 @@ services:
 #      - WIKI_ADMIN_EMAIL=admin@enstaved.com
 #    volumes:
 #      - enstaved-wiki-config/config.yaml:/var/wiki/config.yaml
-  enstaved-blog:
-    image: 'ghost:1-alpine'
-    restart: unless-stopped
-    ports:
-      - '8007:2368'
-    environment:
-      - VIRTUAL_HOST=blog.enstaved.com
-      - LETSENCRYPT_HOST=blog.enstaved.com
-      - LETSENCRYPT_EMAIL=admin@enstaved.com
-      # see https://docs.ghost.org/docs/config#section-running-ghost-with-config-env-variables
-      - url=https://blog.enstaved.com
-      - database__client=mysql
-      - database__connection__host=mysql
-      - database__connection__user=${BLOG_DB_USER}
-      - database__connection__password=${BLOG_DB_PASS}
-      - database__connection__database=${BLOG_DB}
-      - mail__transport=SMTP
-      - mail__options__host=${BLOG_MAIL_SERVER}
-      - mail__options__port=${BLOG_MAIL_PORT}
-      - mail__options__auth__user=${BLOG_MAIL_USER}
-      - mail__options__auth__pass=${BLOG_MAIL_PASSWORD}
-      - mail__options__tls__rejectUnauthorized=false,
-    links:
-      - enstaved-mysql:mysql
-    volumes:
-      - enstaved-blog-content:/var/lib/ghost/content
   enstaved-mysql:
     image: mysql:5.7
     container_name: enstaved-mysql
