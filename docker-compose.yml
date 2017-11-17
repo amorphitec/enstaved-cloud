@@ -40,7 +40,6 @@ services:
       - VIRTUAL_HOST=mail.enstaved.com,blog.enstaved.com,www.enstaved.com
       - LETSENCRYPT_HOST=mail.enstaved.com,blog.enstaved.com,www.enstaved.com
       - LETSENCRYPT_EMAIL=admin@enstaved.com
-      - LETSENCRYPT_EMAIL=admin@enstaved.com
       # see https://docs.ghost.org/docs/config#section-running-ghost-with-config-env-variables
       - url=https://blog.enstaved.com
       - database__client=mysql
