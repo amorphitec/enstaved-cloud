@@ -41,7 +41,7 @@ services:
       - LETSENCRYPT_HOST=mail.enstaved.com,blog.enstaved.com,www.enstaved.com,enstaved.com
       - LETSENCRYPT_EMAIL=admin@enstaved.com
       # see https://docs.ghost.org/docs/config#section-running-ghost-with-config-env-variables
-      - url=https://blog.enstaved.com
+      - url=https://www.enstaved.com
       - database__client=mysql
       - database__connection__host=mysql
       - database__connection__user=${BLOG_DB_USER}
