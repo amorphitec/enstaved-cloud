@@ -37,7 +37,7 @@ services:
       # the first domain in the list as the "primary". The automagic
       # letsencrypt detection in enstaved-mail looks for a directory with
       # the email subdomain. Hence mail.enstaved.com must be first here.
-      - VIRTUAL_HOST=mail.enstaved.com,blog.enstaved.com,www.enstaved.com
+      - VIRTUAL_HOST=mail.enstaved.com,blog.enstaved.com,www.enstaved.com,enstaved.com
       - LETSENCRYPT_HOST=mail.enstaved.com,blog.enstaved.com,www.enstaved.com
       - LETSENCRYPT_EMAIL=admin@enstaved.com
       # see https://docs.ghost.org/docs/config#section-running-ghost-with-config-env-variables
