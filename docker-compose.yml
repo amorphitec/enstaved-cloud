@@ -104,7 +104,7 @@ services:
     container_name: enstaved-propsmith
     restart: unless-stopped
     ports:
-      - "8004:80"
+      - "8007:80"
     environment:
       - VIRTUAL_HOST=propsmith.enstaved.com
       - LETSENCRYPT_HOST=propsmith.enstaved.com
