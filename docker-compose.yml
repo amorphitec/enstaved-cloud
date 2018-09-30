@@ -99,6 +99,18 @@ services:
       - LETSENCRYPT_EMAIL=admin@enstaved.com
     volumes:
       - enstaved-hieronymus-models/:/data/models
+  enstaved-propsmith:
+    image: nginx
+    container_name: enstaved-propsmith
+    restart: unless-stopped
+    ports:
+      - "8004:80"
+    environment:
+      - VIRTUAL_HOST=propsmith.enstaved.com
+      - LETSENCRYPT_HOST=propsmith.enstaved.com
+      - LETSENCRYPT_EMAIL=admin@enstaved.com
+    volumes:
+      - enstaved-propsmith-site/:/usr/share/nginx/html:ro
   enstaved-mail:
     image: tvial/docker-mailserver:latest
     container_name: enstaved-mail
@@ -328,3 +340,7 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/enstaved-mongo/db
+  enstaved-propsmith-site:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/enstaved-propsmith/site
