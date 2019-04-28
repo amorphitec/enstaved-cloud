@@ -73,19 +73,6 @@ services:
       - enstaved-gallery-plugins/:/plugins/
     links:
       - enstaved-mysql:mysql
-  enstaved-survey:
-    image: crramirez/limesurvey:latest
-    container_name: enstaved-survey
-    restart: unless-stopped
-    ports:
-      - "8002:80"
-    environment:
-      - VIRTUAL_HOST=survey.enstaved.com
-      - LETSENCRYPT_HOST=survey.enstaved.com
-      - LETSENCRYPT_EMAIL=admin@enstaved.com
-    volumes:
-      - enstaved-survey-data/:/var/lib/mysql
-      - enstaved-survey-uploads/:/app/upload
   enstaved-hieronymus:
     build:
       context: ./hieronymus
@@ -141,8 +128,7 @@ services:
     cap_add:
     - NET_ADMIN
   enstaved-shop:
-    build:
-      context: ./shop
+    image: amorphic/enstaved-saleor:2.5.0
     container_name: enstaved-shop
     restart: unless-stopped
     ports:
@@ -170,8 +156,7 @@ services:
       - enstaved-postgres:postgres
       - enstaved-redis:redis
   enstaved-devshop:
-    build:
-      context: ./devshop
+    image: amorphic/enstaved-saleor:2.5.0
     container_name: enstaved-devshop
     restart: unless-stopped
     ports:
@@ -198,19 +183,6 @@ services:
     links:
       - enstaved-postgres:postgres
       - enstaved-redis:redis
-#  enstaved-wiki:
-#    image: 'requarks/wiki:latest'
-#    links:
-#      - enstaved-mongo:mongo
-#    ports:
-#      - '8006:3000'
-#    environment:
-#      - VIRTUAL_HOST=wiki.enstaved.com
-#      - LETSENCRYPT_HOST=wiki.enstaved.com
-#      - LETSENCRYPT_EMAIL=admin@enstaved.com
-#      - WIKI_ADMIN_EMAIL=admin@enstaved.com
-#    volumes:
-#      - enstaved-wiki-config/config.yaml:/var/wiki/config.yaml
   enstaved-mysql:
     image: mysql:5.7
     container_name: enstaved-mysql
@@ -249,15 +221,44 @@ services:
       - REDIS_PASSWORD
     volumes:
       - enstaved-redis-db:/bitnami
-  enstaved-mongo:
-    image: mongo
-    container_name: enstaved-mongo
-    restart: unless-stopped
-    ports:
-      - '27017:27017'
-    command: '--smallfiles --logpath=/dev/null'
-    volumes:
-      - enstaved-mongo-db:/data/db
+## DISABLED
+## We may or may not switch these back on in future.
+##
+#  enstaved-survey:
+#    image: crramirez/limesurvey:latest
+#    container_name: enstaved-survey
+#    restart: unless-stopped
+#    ports:
+#      - "8002:80"
+#    environment:
+#      - VIRTUAL_HOST=survey.enstaved.com
+#      - LETSENCRYPT_HOST=survey.enstaved.com
+#      - LETSENCRYPT_EMAIL=admin@enstaved.com
+#    volumes:
+#      - enstaved-survey-data/:/var/lib/mysql
+#      - enstaved-survey-uploads/:/app/upload
+#  enstaved-wiki:
+#    image: 'requarks/wiki:latest'
+#    links:
+#      - enstaved-mongo:mongo
+#    ports:
+#      - '8006:3000'
+#    environment:
+#      - VIRTUAL_HOST=wiki.enstaved.com
+#      - LETSENCRYPT_HOST=wiki.enstaved.com
+#      - LETSENCRYPT_EMAIL=admin@enstaved.com
+#      - WIKI_ADMIN_EMAIL=admin@enstaved.com
+#    volumes:
+#      - enstaved-wiki-config/config.yaml:/var/wiki/config.yaml
+#  enstaved-mongo:
+#    image: mongo
+#    container_name: enstaved-mongo
+#    restart: unless-stopped
+#    ports:
+#      - '27017:27017'
+#    command: '--smallfiles --logpath=/dev/null'
+#    volumes:
+#      - enstaved-mongo-db:/data/db
 
 volumes:
   proxy-certs:
@@ -284,14 +285,6 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/enstaved-gallery/plugins
-  enstaved-survey-uploads:
-    driver: local-persist
-    driver_opts:
-      mountpoint: /var/data/enstaved-survey/uploads
-  enstaved-survey-data:
-    driver: local-persist
-    driver_opts:
-      mountpoint: /var/data/enstaved-survey/data
   enstaved-hieronymus-models:
     driver: local-persist
     driver_opts:
@@ -316,10 +309,6 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/enstaved-devshop/media
-  enstaved-wiki-config:
-    driver: local-persist
-    driver_opts:
-      mountpoint: /var/data/enstaved-wiki/config
   enstaved-blog-content:
     driver: local-persist
     driver_opts:
@@ -336,11 +325,24 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/enstaved-redis/db
-  enstaved-mongo-db:
-    driver: local-persist
-    driver_opts:
-      mountpoint: /var/data/enstaved-mongo/db
   enstaved-propsmith-site:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/enstaved-propsmith/site
+#  enstaved-wiki-config:
+#    driver: local-persist
+#    driver_opts:
+#      mountpoint: /var/data/enstaved-wiki/config
+#  enstaved-mongo-db:
+#    driver: local-persist
+#    driver_opts:
+#      mountpoint: /var/data/enstaved-mongo/db
+#  enstaved-survey-uploads:
+#    driver: local-persist
+#    driver_opts:
+#      mountpoint: /var/data/enstaved-survey/uploads
+#  enstaved-survey-data:
+#    driver: local-persist
+#    driver_opts:
+#      mountpoint: /var/data/enstaved-survey/data
+
